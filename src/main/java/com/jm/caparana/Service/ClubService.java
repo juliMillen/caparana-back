@@ -11,7 +11,7 @@ public class ClubService {
     @Autowired
     private IClubRepository clubRepository;
 
-    private Club findClubById(Long idClub){
+    public Club findClubById(Long idClub){
         if(idClub == null || idClub <= 0){
             throw new RuntimeException("id invalid");
         }

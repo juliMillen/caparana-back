@@ -18,11 +18,11 @@ public class PlayerService {
     @Autowired
     private ICategorityRepository categorityRepository;
 
-    private List<Player> findAllPlayers(){
+    public List<Player> findAllPlayers(){
         return playerRepository.findAll();
     }
 
-    private Player findPlayerById(Long idPlayer){
+    public Player findPlayerById(Long idPlayer){
         if(idPlayer == null || idPlayer <= 0){
             throw new RuntimeException("id invalid");
         }
