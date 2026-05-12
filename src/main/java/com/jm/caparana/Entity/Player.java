@@ -1,20 +1,22 @@
 package com.jm.caparana.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Player extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPlayer;
+
+    private String name;
+
+    private String surname;
 
     private int num;
 
@@ -23,5 +25,7 @@ public class Player extends Person {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCategority")
     private Categority categority;
+
+    private String urlImagen;
 
 }

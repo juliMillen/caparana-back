@@ -6,11 +6,14 @@ import lombok.Setter;
 
 @MappedSuperclass
 @Getter @Setter
+
 public abstract class Person {
 
     protected String name;
 
     protected String surname;
+
+    protected String position;
 
     protected String urlImage;
 }

@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Player;
 import com.jm.caparana.Service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,23 @@ public class PlayerController {
     private PlayerService playerService;
 
     @GetMapping("")
-    public ResponseEntity<List<Player>> getAllPlayers(){
-        List<Player> playerList = playerService.findAllPlayers();
+    public ResponseEntity<List<PlayerDTO>> getAllPlayers(){
+        List<PlayerDTO> playerList = playerService.findAllPlayers();
         return new ResponseEntity<>(playerList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Player> getPlayerById(@PathVariable Long id){
+    public ResponseEntity<PlayerDTO> getPlayerById(@PathVariable Long id){
         return new ResponseEntity<>(playerService.findPlayerById(id),HttpStatus.OK);
     }
 
     @PostMapping("/create/{idCategority}")
-    public ResponseEntity<Player> createPlayer(@PathVariable Long idCategority, @RequestBody Player player){
+    public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestBody PlayerDTO player){
         return new ResponseEntity<>(playerService.save(idCategority,player),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{idPlayer}")
-    public ResponseEntity<Player> updatePlayer(@PathVariable Long idPlayer,@RequestBody Player player){
+    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestBody PlayerDTO player){
         return new ResponseEntity<>(playerService.updatePlayer(idPlayer,player), HttpStatus.OK);
     }
 

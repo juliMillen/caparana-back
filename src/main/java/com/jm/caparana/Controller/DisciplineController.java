@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.DisciplineDTO;
 import com.jm.caparana.Entity.Discipline;
 import com.jm.caparana.Service.DisciplineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,23 @@ public class DisciplineController {
     private DisciplineService disciplineService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Discipline>> getDisciplines(){
-        List<Discipline> disciplineList = disciplineService.findAllDisciplines();
+    public ResponseEntity<List<DisciplineDTO>> getDisciplines(){
+        List<DisciplineDTO> disciplineList = disciplineService.findAllDisciplines();
         return new ResponseEntity<>(disciplineList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Discipline> getDisciplineById(@PathVariable Long id){
+    public ResponseEntity<DisciplineDTO> getDisciplineById(@PathVariable Long id){
         return new ResponseEntity<>(disciplineService.findDisciplineById(id),HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Discipline> createDiscipline(@RequestBody Discipline discipline){
+    public ResponseEntity<DisciplineDTO> createDiscipline(@RequestBody DisciplineDTO discipline){
         return new ResponseEntity<>(disciplineService.save(discipline),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Discipline> updateDiscipline(@PathVariable Long id, @RequestBody Discipline discipline){
+    public ResponseEntity<DisciplineDTO> updateDiscipline(@PathVariable Long id, @RequestBody DisciplineDTO discipline){
         return new ResponseEntity<>(disciplineService.updateDiscipline(id,discipline),HttpStatus.OK);
     }
 

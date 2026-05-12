@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.ExecutiveDTO;
 import com.jm.caparana.Entity.Executive;
 import com.jm.caparana.Service.ExecutiveService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +18,24 @@ public class ExecutiveController {
     private ExecutiveService executiveService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Executive>> getAllExecutives(){
-        List<Executive> executiveList = executiveService.findAllExecutives();
+    public ResponseEntity<List<ExecutiveDTO>> getAllExecutives(){
+        List<ExecutiveDTO> executiveList = executiveService.findAllExecutives();
         return new ResponseEntity<>(executiveList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Executive> getExecutiveById(@PathVariable Long id){
-        Executive toSearch = executiveService.findExecutiveById(id);
+    public ResponseEntity<ExecutiveDTO> getExecutiveById(@PathVariable Long id){
+        ExecutiveDTO toSearch = executiveService.findExecutiveById(id);
         return new ResponseEntity<>(toSearch, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Executive> saveExecutive(@RequestBody Executive executive){
+    public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestBody ExecutiveDTO executive){
         return new ResponseEntity<>(executiveService.save(executive),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Executive> updateExecutive(@PathVariable Long id, @RequestBody Executive executive){
+    public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestBody ExecutiveDTO executive){
         return new ResponseEntity<>(executiveService.updateExecutive(id,executive), HttpStatus.OK);
     }
 

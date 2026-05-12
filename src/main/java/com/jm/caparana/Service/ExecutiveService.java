@@ -1,8 +1,10 @@
 package com.jm.caparana.Service;
 
+import com.jm.caparana.DTO.ExecutiveDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Executive;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IExecutiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,29 +17,36 @@ public class ExecutiveService {
     @Autowired
     private IExecutiveRepository executiveRepository;
 
-    public List<Executive> findAllExecutives(){
-        return executiveRepository.findAll();
+    public List<ExecutiveDTO> findAllExecutives(){
+        return executiveRepository.findAll().stream()
+                .map(Mapper::mapToExecutiveDTO)
+                .toList();
     }
 
-    public Executive findExecutiveById(Long idExecutive){
+    public ExecutiveDTO findExecutiveById(Long idExecutive){
         if(idExecutive == null || idExecutive <= 0){
             throw new RuntimeException("id invalid");
         }
-        return executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("executive not found"));
+        return Mapper.mapToExecutiveDTO(executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("executive not found")));
     }
 
-    public Executive save(Executive executive){
-        return executiveRepository.save(executive);
+    public ExecutiveDTO save(ExecutiveDTO executiveDTO){
+        Executive toCreate = Executive.builder()
+                .name(executiveDTO.getName())
+                .surname(executiveDTO.getSurname())
+                .position(executiveDTO.getPosition())
+                .urlImage(executiveDTO.getUrlImage())
+                .build();
+        return Mapper.mapToExecutiveDTO(executiveRepository.save(toCreate));
     }
 
-    public Executive updateExecutive(Long idExecutive, Executive executive){
-        Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("executive not found"));
-        toUpdate.setName(executive.getName());
-        toUpdate.setSurname(executive.getSurname());
-        toUpdate.setRole(executive.getRole());
-        toUpdate.setUrlImage(executive.getUrlImage());
-        executiveRepository.save(toUpdate);
-        return toUpdate;
+    public ExecutiveDTO updateExecutive(Long idExecutive, ExecutiveDTO executiveDTO){
+        Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("Executive not found"));
+        toUpdate.setName(executiveDTO.getName());
+        toUpdate.setSurname(executiveDTO.getSurname());
+        toUpdate.setPosition(executiveDTO.getPosition());
+        toUpdate.setUrlImage(executiveDTO.getUrlImage());
+        return Mapper.mapToExecutiveDTO(executiveRepository.save(toUpdate));
     }
 
     public void deleteExecutive(Long idExecutive){

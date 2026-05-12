@@ -2,6 +2,7 @@ package com.jm.caparana.DTO;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class ClubDTO {
 
     private String name;
 
+    private LocalDate fundationDate;
+
     private String history;
 
     private String stadiumHistory;
@@ -22,4 +25,8 @@ public class ClubDTO {
     private String colorsHistory;
 
     private List<String> titulos = new ArrayList<>();
+
+    private String urlImageShield;
+
+    private String urlImageStadium;
 }

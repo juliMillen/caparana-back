@@ -1,6 +1,8 @@
 package com.jm.caparana.Service;
 
+import com.jm.caparana.DTO.DisciplineDTO;
 import com.jm.caparana.Entity.Discipline;
+import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IDisciplineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,30 +15,38 @@ public class DisciplineService {
     @Autowired
     private IDisciplineRepository disciplineRepository;
 
-    public List<Discipline> findAllDisciplines(){
-        return disciplineRepository.findAll();
+    public List<DisciplineDTO> findAllDisciplines(){
+        return disciplineRepository.findAll().stream()
+                .map(Mapper::mapToDisciplineDTO)
+                .toList();
     }
 
-    public Discipline findDisciplineById(Long idDiscipline){
+    public DisciplineDTO findDisciplineById(Long idDiscipline){
         if(idDiscipline == null || idDiscipline <= 0){
             throw new RuntimeException("id invalid");
         }
-        return disciplineRepository.findById(idDiscipline).orElseThrow(() -> new RuntimeException("discipline not found"));
+        return Mapper.mapToDisciplineDTO(disciplineRepository.findById(idDiscipline).orElseThrow(() -> new RuntimeException("Discipline not found")));
     }
 
-    public Discipline save(Discipline discipline){
-        return disciplineRepository.save(discipline);
+    public DisciplineDTO save(DisciplineDTO disciplineDTO){
+        Discipline toCreate = Discipline.builder()
+                .nameDiscipline(disciplineDTO.getNameDiscipline())
+                .description(disciplineDTO.getDescription())
+                .ubication(disciplineDTO.getUbication())
+                .professorAsig(disciplineDTO.getProfessorAsig())
+                .schedule(disciplineDTO.getSchedule())
+                .build();
+        return Mapper.mapToDisciplineDTO(disciplineRepository.save(toCreate));
     }
 
-    public Discipline updateDiscipline(Long idDiscipline, Discipline discipline){
-        Discipline toUpdate = disciplineRepository.findById(idDiscipline).orElseThrow(()-> new RuntimeException("discipline not found"));
-        toUpdate.setNameDiscipline(discipline.getNameDiscipline());
-        toUpdate.setDescription(discipline.getDescription());
-        toUpdate.setSchedule(discipline.getSchedule());
-        toUpdate.setProfessorAsig(discipline.getProfessorAsig());
-        toUpdate.setUbication(discipline.getUbication());
-        disciplineRepository.save(toUpdate);
-        return toUpdate;
+    public DisciplineDTO updateDiscipline(Long idDiscipline, DisciplineDTO disciplineDTO){
+        Discipline toUpdate = disciplineRepository.findById(idDiscipline).orElseThrow(()-> new RuntimeException("Discipline not found"));
+        toUpdate.setNameDiscipline(disciplineDTO.getNameDiscipline());
+        toUpdate.setDescription(disciplineDTO.getDescription());
+        toUpdate.setProfessorAsig(disciplineDTO.getProfessorAsig());
+        toUpdate.setUbication(disciplineDTO.getUbication());
+        toUpdate.setSchedule(disciplineDTO.getSchedule());
+        return Mapper.mapToDisciplineDTO(disciplineRepository.save(toUpdate));
     }
 
     public void deleteDiscipline(Long idDiscipline){

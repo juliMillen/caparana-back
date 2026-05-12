@@ -1,6 +1,7 @@
 package com.jm.caparana.Controller;
 
 
+import com.jm.caparana.DTO.ClubDTO;
 import com.jm.caparana.Entity.Club;
 import com.jm.caparana.Service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +17,18 @@ public class ClubController {
     private ClubService clubService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Club> getClubById(@PathVariable Long id){
+    public ResponseEntity<ClubDTO> getClubById(@PathVariable Long id){
         return new ResponseEntity<>(clubService.findClubById(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Club> createClub(@RequestBody Club club){
+    public ResponseEntity<ClubDTO> createClub(@RequestBody ClubDTO club){
         return new ResponseEntity<>(clubService.save(club),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Club> updateClub(@RequestBody Club club){
-        return new ResponseEntity<>(clubService.updateClub(club),HttpStatus.OK);
+    public ResponseEntity<ClubDTO> updateClub(@PathVariable Long idClub,@RequestBody ClubDTO club){
+        return new ResponseEntity<>(clubService.updateClub(idClub,club),HttpStatus.OK);
     }
 
 

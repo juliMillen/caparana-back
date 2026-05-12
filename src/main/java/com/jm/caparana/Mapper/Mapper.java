@@ -73,7 +73,7 @@ public class Mapper {
 
     //mapeo de Discipline a DisciplineDTO
 
-    static DisciplineDTO mapToDisciplineDTO(Discipline discipline){
+    static public DisciplineDTO mapToDisciplineDTO(Discipline discipline){
         if(discipline == null){
             throw new IllegalArgumentException("Discipline is null");
         }
@@ -90,7 +90,7 @@ public class Mapper {
 
     //mapeo de Executive a ExecutiveDTO
 
-    static ExecutiveDTO mapToExecutiveDTO(Executive executive){
+    static public ExecutiveDTO mapToExecutiveDTO(Executive executive){
         if(executive == null){
             throw new IllegalArgumentException("Executive is null");
         }
@@ -98,14 +98,14 @@ public class Mapper {
                 .idExecutive(executive.getIdExecutive())
                 .name(executive.getName())
                 .surname(executive.getSurname())
-                .role(executive.getRole())
+                .position(executive.getPosition())
                 .urlImage(executive.getUrlImage())
                 .build();
     }
 
     //mapeo de GalleryPhoto a GalleryPhotoDTO
 
-    static GalleryPhotoDTO mapToGalleryDTO(GalleryPhoto gallery){
+    static public GalleryPhotoDTO mapToGalleryDTO(GalleryPhoto gallery){
         if(gallery == null){
             throw  new IllegalArgumentException("Gallery is null");
         }
@@ -119,7 +119,7 @@ public class Mapper {
 
     //mapeo de Report a ReportDTO
 
-    static ReportDTO mapToReportDTO(Report report){
+    static public ReportDTO mapToReportDTO(Report report){
         if(report == null){
             throw new IllegalArgumentException("Report is null");
         }

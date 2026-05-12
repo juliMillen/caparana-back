@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.CategorityDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Service.CategorityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,23 @@ public class CategorityController {
     private CategorityService categorityService;
 
     @GetMapping("")
-    public ResponseEntity<List<Categority>> getCategorities(){
-        List<Categority> categorityList = categorityService.findAllCategorities();
+    public ResponseEntity<List<CategorityDTO>> getCategorities(){
+        List<CategorityDTO> categorityList = categorityService.findAllCategorities();
         return new ResponseEntity<>(categorityList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Categority> getCategority(@PathVariable Long id){
+    public ResponseEntity<CategorityDTO> getCategority(@PathVariable Long id){
         return new ResponseEntity<>(categorityService.findCategorityById(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Categority> createCategority(@RequestBody Categority categority){
+    public ResponseEntity<CategorityDTO> createCategority(@RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.save(categority),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Categority> updateCategority(@PathVariable Long id, @RequestBody Categority categority){
+    public ResponseEntity<CategorityDTO> updateCategority(@PathVariable Long id, @RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.updateCategority(id,categority),HttpStatus.OK);
     }
 

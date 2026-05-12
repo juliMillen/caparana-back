@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.GalleryPhotoDTO;
 import com.jm.caparana.Entity.GalleryPhoto;
 import com.jm.caparana.Service.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,12 @@ public class GalleryController {
     private GalleryService galleryService;
 
     @PostMapping("/create")
-    public ResponseEntity<GalleryPhoto> createGallery(@RequestBody GalleryPhoto gallery){
+    public ResponseEntity<GalleryPhotoDTO> createGallery(@RequestBody GalleryPhotoDTO gallery){
         return new ResponseEntity<>(galleryService.create(gallery), HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<GalleryPhoto> updateGallery(@PathVariable Long id,  @RequestBody GalleryPhoto gallery){
+    public ResponseEntity<GalleryPhotoDTO> updateGallery(@PathVariable Long id,  @RequestBody GalleryPhotoDTO gallery){
         return new ResponseEntity<>(galleryService.updateGallery(id,gallery),HttpStatus.OK);
     }
 

@@ -1,7 +1,9 @@
 package com.jm.caparana.Service;
 
+import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ICategorityRepository;
 import com.jm.caparana.Repository.IPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,33 +20,54 @@ public class PlayerService {
     @Autowired
     private ICategorityRepository categorityRepository;
 
-    public List<Player> findAllPlayers(){
-        return playerRepository.findAll();
+    public List<PlayerDTO> findAllPlayers(){
+        return playerRepository.findAll().stream()
+                .map(Mapper::mapToPlayerDTO)
+                .toList();
     }
 
-    public Player findPlayerById(Long idPlayer){
+    public PlayerDTO findPlayerById(Long idPlayer){
         if(idPlayer == null || idPlayer <= 0){
             throw new RuntimeException("id invalid");
         }
-        return playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("player not found"));
+        return Mapper.mapToPlayerDTO(playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("player not found")));
     }
 
-    public Player save(Long idCategority,Player player){
-        Categority categority = categorityRepository.findById(idCategority).orElseThrow(() -> new RuntimeException("categority not found"));
-        player.setCategority(categority);
-        return playerRepository.save(player);
+    public PlayerDTO save(Long idCategority,PlayerDTO playerDTO){
+
+        Categority categority = Categority.builder()
+                .idCategority(playerDTO.getCategority().getIdCategority())
+                .nameCategority(playerDTO.getCategority().getNameCategority())
+                .build();
+
+        Player toCreate = Player.builder()
+                .name(playerDTO.getName())
+                .surname(playerDTO.getSurname())
+                .position(playerDTO.getPosition())
+                .num(playerDTO.getNum())
+                .urlImagen(playerDTO.getUrlImage())
+                .categority(categority)
+                .build();
+
+        return Mapper.mapToPlayerDTO(playerRepository.save(toCreate));
     }
 
-    public Player updatePlayer(Long idPlayer, Player player){
-        Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("player not found"));
-        toUpdate.setName(player.getName());
-        toUpdate.setSurname(player.getSurname());
-        toUpdate.setCategority(player.getCategority());
-        toUpdate.setPosition(player.getPosition());
-        toUpdate.setNum(player.getNum());
-        toUpdate.setUrlImage(player.getUrlImage());
-        playerRepository.save(toUpdate);
-        return toUpdate;
+    public PlayerDTO updatePlayer(Long idPlayer, PlayerDTO playerDTO){
+
+        Categority categority = Categority.builder()
+                .idCategority(playerDTO.getCategority().getIdCategority())
+                .nameCategority(playerDTO.getCategority().getNameCategority())
+                .build();
+
+        Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("Player not found"));
+        toUpdate.setName(playerDTO.getName());
+        toUpdate.setSurname(playerDTO.getSurname());
+        toUpdate.setPosition(playerDTO.getPosition());
+        toUpdate.setNum(playerDTO.getNum());
+        toUpdate.setUrlImagen(playerDTO.getUrlImage());
+        toUpdate.setCategority(categority);
+        return Mapper.mapToPlayerDTO(playerRepository.save(toUpdate));
+
     }
 
     public void deletePlayer(Long idPlayer){

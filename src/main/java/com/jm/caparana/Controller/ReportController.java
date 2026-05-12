@@ -1,5 +1,6 @@
 package com.jm.caparana.Controller;
 
+import com.jm.caparana.DTO.ReportDTO;
 import com.jm.caparana.Entity.Report;
 import com.jm.caparana.Service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,23 @@ public class ReportController {
     private ReportService reportService;
 
     @GetMapping("")
-    public ResponseEntity<List<Report>> getReports(){
-        List<Report> reportList = reportService.findAllReports();
+    public ResponseEntity<List<ReportDTO>> getReports(){
+        List<ReportDTO> reportList = reportService.findAllReports();
         return new ResponseEntity<>(reportList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Report> getReportById(@PathVariable Long id){
+    public ResponseEntity<ReportDTO> getReportById(@PathVariable Long id){
         return new ResponseEntity<>(reportService.findReportById(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Report> createReport(@RequestBody Report report){
-        return new ResponseEntity<>(reportService.save(report), HttpStatus.CREATED);
+    public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO report){
+        return new ResponseEntity<>(reportService.saveDTO(report), HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<Report> updateReport(@PathVariable Long id, @RequestBody Report report){
+    public ResponseEntity<ReportDTO> updateReport(@PathVariable Long id, @RequestBody ReportDTO report){
         return new ResponseEntity<>(reportService.updateReport(id,report),HttpStatus.OK);
     }
 

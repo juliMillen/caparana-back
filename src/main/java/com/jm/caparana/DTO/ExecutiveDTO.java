@@ -15,7 +15,7 @@ public class ExecutiveDTO extends Person {
 
     private String surname;
 
-    private String role;
+    private String position;
 
     private String urlImage;
 }
