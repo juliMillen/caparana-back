@@ -2,6 +2,7 @@ package com.jm.caparana.Service;
 
 import com.jm.caparana.DTO.ReportDTO;
 import com.jm.caparana.Entity.Report;
+import com.jm.caparana.Exception.ReportException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ReportService {
         if(id == null || id == 0){
             throw new RuntimeException("id invalid");
         }
-        return Mapper.mapToReportDTO(reportRepository.findById(id).orElseThrow(() -> new RuntimeException("report not found")));
+        return Mapper.mapToReportDTO(reportRepository.findById(id).orElseThrow(() -> new ReportException("report not found")));
     }
 
     public ReportDTO saveDTO(ReportDTO newReport){
@@ -40,7 +41,7 @@ public class ReportService {
     }
 
     public ReportDTO updateReport(Long idReport, ReportDTO reportDTO){
-        Report toUpdate = reportRepository.findById(idReport).orElseThrow(() -> new RuntimeException("Report not found"));
+        Report toUpdate = reportRepository.findById(idReport).orElseThrow(() -> new ReportException("Report not found"));
         toUpdate.setTitle(reportDTO.getTitle());
         toUpdate.setDescription(reportDTO.getDescription());
         toUpdate.setPublicationDate(reportDTO.getPublicationDate());

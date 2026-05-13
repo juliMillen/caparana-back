@@ -3,6 +3,7 @@ package com.jm.caparana.DTO;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -16,5 +17,5 @@ public class GalleryPhotoDTO {
 
     private LocalDate publicationDate;
 
-    private String urlImage;
+    private List<PhotoDTO> photoDTOS;
 }

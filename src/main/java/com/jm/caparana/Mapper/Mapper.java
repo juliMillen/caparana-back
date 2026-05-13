@@ -2,6 +2,7 @@ package com.jm.caparana.Mapper;
 
 import com.jm.caparana.DTO.*;
 import com.jm.caparana.Entity.*;
+import org.hibernate.engine.spi.CollectionEntry;
 
 import java.util.stream.Collectors;
 
@@ -109,11 +110,20 @@ public class Mapper {
         if(gallery == null){
             throw  new IllegalArgumentException("Gallery is null");
         }
+
+        var list = gallery.getPhotos().stream().map(photos ->
+            PhotoDTO.builder()
+                    .idPhoto(photos.getIdPhoto())
+                    .description(photos.getDescription())
+                    .urlImage(photos.getUrlImage())
+                    .build()
+        ).collect(Collectors.toList());
+
         return GalleryPhotoDTO.builder()
                 .idGallery(gallery.getIdGallery())
                 .title(gallery.getTitle())
                 .publicationDate(gallery.getPublicationDate())
-                .urlImage(gallery.getUrlImage())
+                .photoDTOS(list)
                 .build();
     }
 
@@ -130,6 +140,34 @@ public class Mapper {
                 .description(report.getDescription())
                 .publicationDate(report.getPublicationDate())
                 .urlImage(report.getUrlImage())
+                .build();
+    }
+
+    //mapeo de Sponsor a SponsorDTO
+
+    static public SponsorDTO mapToSponsorDTO(Sponsor sponsor){
+        if(sponsor == null){
+            throw new IllegalArgumentException("Sponsor is null");
+        }
+
+        return SponsorDTO.builder()
+                .idSponsor(sponsor.getIdSponsor())
+                .name(sponsor.getName())
+                .urlImage(sponsor.getUrlImage())
+                .build();
+    }
+
+    //mapeo de Photo a PhotoDTO
+
+    static public PhotoDTO mapToPhotoDTO(Photo photo){
+        if(photo == null){
+            throw new IllegalArgumentException("Photo is null");
+        }
+
+        return PhotoDTO.builder()
+                .idPhoto(photo.getIdPhoto())
+                .description(photo.getDescription())
+                .urlImage(photo.getUrlImage())
                 .build();
     }
 }

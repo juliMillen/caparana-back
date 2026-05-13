@@ -2,10 +2,13 @@ package com.jm.caparana.Service;
 
 import com.jm.caparana.DTO.ClubDTO;
 import com.jm.caparana.Entity.Club;
+import com.jm.caparana.Exception.ClubException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class ClubService {
@@ -17,7 +20,7 @@ public class ClubService {
         if(idClub == null || idClub <= 0){
             throw new RuntimeException("id invalid");
         }
-        return clubRepository.findById(idClub).orElseThrow(() -> new RuntimeException("club not found"));
+        return Mapper.mapToClubDTO(clubRepository.findById(idClub).orElseThrow(() -> new ClubException("Club not found")));
     }
 
     public ClubDTO save(ClubDTO clubDTO){
@@ -34,7 +37,7 @@ public class ClubService {
     }
 
     public ClubDTO updateClub(Long id,ClubDTO clubDTO){
-        Club toUpdate = clubRepository.findById(id).orElseThrow(() -> new RuntimeException("club not found"));
+        Club toUpdate = clubRepository.findById(id).orElseThrow(() -> new ClubException("club not found"));
         toUpdate.setName(clubDTO.getName());
         toUpdate.setFundationDate(clubDTO.getFundationDate());
         toUpdate.setHistory(clubDTO.getHistory());

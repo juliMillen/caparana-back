@@ -3,6 +3,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Exception.PlayerException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ICategorityRepository;
 import com.jm.caparana.Repository.IPlayerRepository;
@@ -30,7 +31,7 @@ public class PlayerService {
         if(idPlayer == null || idPlayer <= 0){
             throw new RuntimeException("id invalid");
         }
-        return Mapper.mapToPlayerDTO(playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("player not found")));
+        return Mapper.mapToPlayerDTO(playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("player not found")));
     }
 
     public PlayerDTO save(Long idCategority,PlayerDTO playerDTO){
@@ -59,7 +60,7 @@ public class PlayerService {
                 .nameCategority(playerDTO.getCategority().getNameCategority())
                 .build();
 
-        Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new RuntimeException("Player not found"));
+        Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("Player not found"));
         toUpdate.setName(playerDTO.getName());
         toUpdate.setSurname(playerDTO.getSurname());
         toUpdate.setPosition(playerDTO.getPosition());

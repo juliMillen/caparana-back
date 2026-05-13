@@ -3,6 +3,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.CategorityDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Exception.CategorityException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ICategorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CategorityService {
         if(idCategority == null || idCategority <= 0){
             throw new RuntimeException("id invalid");
         }
-        return Mapper.mapToCategorityDTO(categorityRepository.findById(idCategority).orElseThrow(() -> new RuntimeException("categority not found")));
+        return Mapper.mapToCategorityDTO(categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("categority not found")));
     }
 
     public CategorityDTO save(CategorityDTO categorityDTO){
@@ -62,7 +63,7 @@ public class CategorityService {
                         .build())
                 .collect(Collectors.toList());
 
-        Categority toUpdate = categorityRepository.findById(idCategority).orElseThrow(() -> new RuntimeException("Categority not found"));
+        Categority toUpdate = categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("Categority not found"));
         toUpdate.setNameCategority(categorityDTO.getNameCategority());
         toUpdate.setPlayerList(players);
         return Mapper.mapToCategorityDTO(categorityRepository.save(toUpdate));

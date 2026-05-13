@@ -2,6 +2,7 @@ package com.jm.caparana.Service;
 
 import com.jm.caparana.DTO.DisciplineDTO;
 import com.jm.caparana.Entity.Discipline;
+import com.jm.caparana.Exception.DisciplineException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IDisciplineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class DisciplineService {
         if(idDiscipline == null || idDiscipline <= 0){
             throw new RuntimeException("id invalid");
         }
-        return Mapper.mapToDisciplineDTO(disciplineRepository.findById(idDiscipline).orElseThrow(() -> new RuntimeException("Discipline not found")));
+        return Mapper.mapToDisciplineDTO(disciplineRepository.findById(idDiscipline).orElseThrow(() -> new DisciplineException("Discipline not found")));
     }
 
     public DisciplineDTO save(DisciplineDTO disciplineDTO){

@@ -1,12 +1,11 @@
 package com.jm.caparana.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -23,5 +22,6 @@ public class GalleryPhoto {
 
     private LocalDate publicationDate;
 
-    private String urlImage;
+    @OneToMany(mappedBy = "galleryPhoto" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photos = new ArrayList<>();
 }

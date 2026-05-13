@@ -1,9 +1,8 @@
 package com.jm.caparana.Service;
 
 import com.jm.caparana.DTO.ExecutiveDTO;
-import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Executive;
-import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Exception.ExecutiveException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IExecutiveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class ExecutiveService {
         if(idExecutive == null || idExecutive <= 0){
             throw new RuntimeException("id invalid");
         }
-        return Mapper.mapToExecutiveDTO(executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("executive not found")));
+        return Mapper.mapToExecutiveDTO(executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("executive not found")));
     }
 
     public ExecutiveDTO save(ExecutiveDTO executiveDTO){
@@ -41,7 +40,7 @@ public class ExecutiveService {
     }
 
     public ExecutiveDTO updateExecutive(Long idExecutive, ExecutiveDTO executiveDTO){
-        Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new RuntimeException("Executive not found"));
+        Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("Executive not found"));
         toUpdate.setName(executiveDTO.getName());
         toUpdate.setSurname(executiveDTO.getSurname());
         toUpdate.setPosition(executiveDTO.getPosition());
