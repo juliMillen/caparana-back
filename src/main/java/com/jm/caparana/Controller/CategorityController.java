@@ -6,6 +6,7 @@ import com.jm.caparana.Service.CategorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,16 +30,19 @@ public class CategorityController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<CategorityDTO> createCategority(@RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.save(categority),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<CategorityDTO> updateCategority(@PathVariable Long id, @RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.updateCategority(id,categority),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<String> deleteCategority(@PathVariable Long id){
       categorityService.deleteCategority(id);
       return new ResponseEntity<>("Categority deleted succesfully", HttpStatus.OK);

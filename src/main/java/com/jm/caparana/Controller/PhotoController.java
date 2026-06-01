@@ -5,6 +5,7 @@ import com.jm.caparana.Service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,11 +29,13 @@ public class PhotoController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<PhotoDTO> createPhoto(@RequestBody PhotoDTO photoDTO){
         return new ResponseEntity<>(photoService.createPhoto(photoDTO),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<String> deletePhoto(@PathVariable Long id){
         photoService.deletePhoto(id);
         return new ResponseEntity<>("Photo deleted succesfully", HttpStatus.NOT_FOUND);

@@ -6,6 +6,7 @@ import com.jm.caparana.Service.ExecutiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,17 +31,20 @@ public class ExecutiveController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestBody ExecutiveDTO executive){
         return new ResponseEntity<>(executiveService.save(executive),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestBody ExecutiveDTO executive){
         return new ResponseEntity<>(executiveService.updateExecutive(id,executive), HttpStatus.OK);
     }
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<String> deleteExecutive(@PathVariable Long id){
         executiveService.deleteExecutive(id);
         return new ResponseEntity<>("Executive Deleted Succesfully", HttpStatus.NOT_FOUND);

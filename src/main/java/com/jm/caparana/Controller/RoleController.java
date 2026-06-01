@@ -7,6 +7,7 @@ import com.jm.caparana.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -25,18 +26,21 @@ public class RoleController {
 
 
     @GetMapping("")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Role>> getRoles(){
         List<Role> roleList = roleService.findAll();
         return new ResponseEntity<>(roleList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Role> getRoleById(@PathVariable Long id){
         Role role = roleService.findById(id);
         return new ResponseEntity<>(role, HttpStatus.OK);
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<Role> createRole(@RequestBody Role role){
         Set<Permission> permissionsList = new HashSet<>();
         Permission readPermission;
@@ -54,6 +58,7 @@ public class RoleController {
     }
 
     @PatchMapping("/update")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<Role> updateRole(@RequestBody Role role){
         Role toUpdate = roleService.findById(role.getId());
         roleService.update(toUpdate);
@@ -62,6 +67,7 @@ public class RoleController {
 
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         roleService.deleteById(id);
         return new ResponseEntity<>("Role has been deleted", HttpStatus.NO_CONTENT);

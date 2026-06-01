@@ -6,6 +6,7 @@ import com.jm.caparana.Service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,16 +30,19 @@ public class ReportController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO report){
         return new ResponseEntity<>(reportService.saveDTO(report), HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<ReportDTO> updateReport(@PathVariable Long id, @RequestBody ReportDTO report){
         return new ResponseEntity<>(reportService.updateReport(id,report),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN)")
     public ResponseEntity<String> deleteReport(@PathVariable Long id){
         reportService.deleteReport(id);
         return new ResponseEntity<>("Report deleted succesfully", HttpStatus.NOT_FOUND);
