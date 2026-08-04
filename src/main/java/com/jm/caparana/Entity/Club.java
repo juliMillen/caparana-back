@@ -31,7 +31,7 @@ public class Club {
 
     private String colorsHistory;
 
-    private List<String> titulos = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
 
     private String urlImageShield;
 
