@@ -20,7 +20,7 @@ public class Mapper {
                 .history(club.getHistory())
                 .stadiumHistory(club.getStadiumHistory())
                 .colorsHistory(club.getColorsHistory())
-                .titulos(club.getTitulos())
+                .titles(club.getTitles())
                 .build();
     }
 

@@ -23,13 +23,13 @@ public class ClubController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClubDTO> createClub(@RequestBody ClubDTO club){
         return new ResponseEntity<>(clubService.save(club),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClubDTO> updateClub(@PathVariable Long idClub,@RequestBody ClubDTO club){
         return new ResponseEntity<>(clubService.updateClub(idClub,club),HttpStatus.OK);
     }
@@ -37,7 +37,7 @@ public class ClubController {
 
     // THIS IS UNIQUE FOR TEST IN THE BACKEND
     @DeleteMapping("/delete")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteClub(@PathVariable Long id){
         clubService.deleteClub(id);
         return new ResponseEntity<>("Club deleted succesfully", HttpStatus.NOT_FOUND);

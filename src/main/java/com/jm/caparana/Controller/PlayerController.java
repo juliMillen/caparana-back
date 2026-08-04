@@ -30,19 +30,19 @@ public class PlayerController {
     }
 
     @PostMapping("/create/{idCategority}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestBody PlayerDTO player){
         return new ResponseEntity<>(playerService.save(idCategority,player),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{idPlayer}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestBody PlayerDTO player){
         return new ResponseEntity<>(playerService.updatePlayer(idPlayer,player), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deletePlayer(@PathVariable Long id){
         playerService.deletePlayer(id);
         return new ResponseEntity<>("Player deleted succesfully", HttpStatus.NOT_FOUND);

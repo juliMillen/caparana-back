@@ -30,19 +30,19 @@ public class DisciplineController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DisciplineDTO> createDiscipline(@RequestBody DisciplineDTO discipline){
         return new ResponseEntity<>(disciplineService.save(discipline),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DisciplineDTO> updateDiscipline(@PathVariable Long id, @RequestBody DisciplineDTO discipline){
         return new ResponseEntity<>(disciplineService.updateDiscipline(id,discipline),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteDiscipline(@PathVariable Long id){
         disciplineService.deleteDiscipline(id);
         return new ResponseEntity<>("Discipline deleted succesfully", HttpStatus.NOT_FOUND);

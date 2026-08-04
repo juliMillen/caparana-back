@@ -22,7 +22,7 @@ public class GalleryController {
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GalleryPhotoDTO> updateGallery(@PathVariable Long id,  @RequestBody GalleryPhotoDTO gallery){
         return new ResponseEntity<>(galleryService.updateGallery(id,gallery),HttpStatus.OK);
     }
@@ -30,7 +30,7 @@ public class GalleryController {
 
     //THIS IS FOR TEST IN THE BACKEND
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteGallery(@PathVariable Long id){
         galleryService.deleteGallery(id);
         return new ResponseEntity<>("Gallery deleted succesfully", HttpStatus.NOT_FOUND);

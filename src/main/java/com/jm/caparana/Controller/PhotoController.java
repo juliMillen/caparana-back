@@ -29,13 +29,13 @@ public class PhotoController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PhotoDTO> createPhoto(@RequestBody PhotoDTO photoDTO){
         return new ResponseEntity<>(photoService.createPhoto(photoDTO),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deletePhoto(@PathVariable Long id){
         photoService.deletePhoto(id);
         return new ResponseEntity<>("Photo deleted succesfully", HttpStatus.NOT_FOUND);

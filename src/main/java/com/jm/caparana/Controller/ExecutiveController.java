@@ -37,14 +37,14 @@ public class ExecutiveController {
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestBody ExecutiveDTO executive){
         return new ResponseEntity<>(executiveService.updateExecutive(id,executive), HttpStatus.OK);
     }
 
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteExecutive(@PathVariable Long id){
         executiveService.deleteExecutive(id);
         return new ResponseEntity<>("Executive Deleted Succesfully", HttpStatus.NOT_FOUND);
