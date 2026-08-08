@@ -40,7 +40,7 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Role> createRole(@RequestBody Role role){
         Set<Permission> permissionsList = new HashSet<>();
         Permission readPermission;
@@ -58,7 +58,7 @@ public class RoleController {
     }
 
     @PatchMapping("/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Role> updateRole(@RequestBody Role role){
         Role toUpdate = roleService.findById(role.getId());
         roleService.update(toUpdate);
@@ -67,7 +67,7 @@ public class RoleController {
 
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         roleService.deleteById(id);
         return new ResponseEntity<>("Role has been deleted", HttpStatus.NO_CONTENT);

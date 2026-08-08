@@ -1,9 +1,6 @@
 package com.jm.caparana.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,10 +22,13 @@ public class Club {
 
     private LocalDate fundationDate;
 
+    @Column(columnDefinition = "TEXT")
     private String history;
 
+    @Column(columnDefinition = "TEXT")
     private String stadiumHistory;
 
+    @Column(columnDefinition = "TEXT")
     private String colorsHistory;
 
     private List<String> titles = new ArrayList<>();

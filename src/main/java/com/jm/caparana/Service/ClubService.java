@@ -30,6 +30,7 @@ public class ClubService {
                 .history(clubDTO.getHistory())
                 .stadiumHistory(clubDTO.getStadiumHistory())
                 .colorsHistory(clubDTO.getColorsHistory())
+                .titles(clubDTO.getTitles())
                 .urlImageShield(clubDTO.getUrlImageStadium())
                 .urlImageStadium(clubDTO.getUrlImageStadium())
                 .build();

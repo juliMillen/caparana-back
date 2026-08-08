@@ -18,6 +18,7 @@ public class Mapper {
                 .idClub(club.getIdClub())
                 .name(club.getName())
                 .history(club.getHistory())
+                .fundationDate(club.getFundationDate())
                 .stadiumHistory(club.getStadiumHistory())
                 .colorsHistory(club.getColorsHistory())
                 .titles(club.getTitles())

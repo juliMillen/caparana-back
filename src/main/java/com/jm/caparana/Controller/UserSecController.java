@@ -39,7 +39,7 @@ public class UserSecController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserSec> createUser(@RequestBody UserSec user){
         Set<Role> roles = new HashSet<>();
         Role readRole;
@@ -63,7 +63,7 @@ public class UserSecController {
     }
 
     @PatchMapping("/update")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserSec> updateUser(@RequestBody UserSec user){
         UserSec toUpdate = userSecService.findById(user.getId());
         if(toUpdate != null){
@@ -76,7 +76,7 @@ public class UserSecController {
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteById(@PathVariable Long id){
         userSecService.deleteById(id);
         return new ResponseEntity<>("User has been deleted", HttpStatus.NO_CONTENT);
