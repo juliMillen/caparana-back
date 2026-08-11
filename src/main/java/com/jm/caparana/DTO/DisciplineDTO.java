@@ -3,6 +3,7 @@ package com.jm.caparana.DTO;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class DisciplineDTO {
 
     private String description;
 
-    private LocalDate schedule;
+    private LocalTime schedule;
 
     private String professorAsig;
 

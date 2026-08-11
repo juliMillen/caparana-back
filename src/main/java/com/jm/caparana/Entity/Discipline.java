@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Getter @Setter
@@ -17,13 +18,13 @@ public class Discipline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDispline;
+    private Long idDiscipline;
 
     private String nameDiscipline;
 
     private String description;
 
-    private LocalDate schedule;
+    private LocalTime schedule;
 
     private String professorAsig;
 

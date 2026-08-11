@@ -81,7 +81,7 @@ public class Mapper {
         }
 
         return DisciplineDTO.builder()
-                .idDiscipline(discipline.getIdDispline())
+                .idDiscipline(discipline.getIdDiscipline())
                 .nameDiscipline(discipline.getNameDiscipline())
                 .description(discipline.getDescription())
                 .schedule(discipline.getSchedule())
