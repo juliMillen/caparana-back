@@ -34,37 +34,43 @@ public class CategorityService {
 
     public CategorityDTO save(CategorityDTO categorityDTO){
 
+        Categority toCreate = Categority.builder()
+                .nameCategority(categorityDTO.getNameCategority())
+                .build();
+
         List<Player> players = categorityDTO.getPlayerList().stream()
                 .map(playerDTO -> Player.builder()
                         .idPlayer(playerDTO.getIdPlayer())
                         .name(playerDTO.getName())
                         .surname(playerDTO.getSurname())
                         .position(playerDTO.getPosition())
-                        .urlImagen(playerDTO.getUrlImage())
+                        .num(playerDTO.getNum())
+                        .urlImage(playerDTO.getUrlImage())
+                        .categority(toCreate)
                         .build())
                 .collect(Collectors.toList());
-
-        Categority toCreate = Categority.builder()
-                .nameCategority(categorityDTO.getNameCategority())
-                .playerList(players)
-                .build();
+        toCreate.setPlayerList(players);
 
         return Mapper.mapToCategorityDTO(categorityRepository.save(toCreate));
     }
 
     public CategorityDTO updateCategority(Long idCategority, CategorityDTO categorityDTO){
+        Categority toUpdate = categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("Categority not found"));
+        toUpdate.setNameCategority(categorityDTO.getNameCategority());
+
         List<Player> players = categorityDTO.getPlayerList().stream()
                 .map(playerDTO -> Player.builder()
                         .idPlayer(playerDTO.getIdPlayer())
                         .name(playerDTO.getName())
                         .surname(playerDTO.getSurname())
                         .position(playerDTO.getPosition())
-                        .urlImagen(playerDTO.getUrlImage())
+                        .num(playerDTO.getNum())
+                        .urlImage(playerDTO.getUrlImage())
+                        .categority(toUpdate)
                         .build())
                 .collect(Collectors.toList());
 
-        Categority toUpdate = categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("Categority not found"));
-        toUpdate.setNameCategority(categorityDTO.getNameCategority());
+
         toUpdate.setPlayerList(players);
         return Mapper.mapToCategorityDTO(categorityRepository.save(toUpdate));
 

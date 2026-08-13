@@ -4,6 +4,7 @@ import com.jm.caparana.DTO.*;
 import com.jm.caparana.Entity.*;
 import org.hibernate.engine.spi.CollectionEntry;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Mapper {
@@ -33,7 +34,7 @@ public class Mapper {
             throw new IllegalArgumentException("Categority is null");
 
         }
-        var list = categority.getPlayerList().stream().map(players ->
+        List<PlayerDTO> list = categority.getPlayerList().stream().map(players ->
                 PlayerDTO.builder()
                         .idPlayer(players.getIdPlayer())
                         .name(players.getName())
@@ -49,7 +50,6 @@ public class Mapper {
                 .nameCategority(categority.getNameCategority())
                 .playerList(list)
                 .build();
-
     }
 
     //mapeo de Player a PlayerDTO

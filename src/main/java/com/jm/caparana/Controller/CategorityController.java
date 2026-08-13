@@ -30,19 +30,19 @@ public class CategorityController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<CategorityDTO> createCategority(@RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.save(categority),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<CategorityDTO> updateCategority(@PathVariable Long id, @RequestBody CategorityDTO categority){
         return new ResponseEntity<>(categorityService.updateCategority(id,categority),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN)")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteCategority(@PathVariable Long id){
       categorityService.deleteCategority(id);
       return new ResponseEntity<>("Categority deleted succesfully", HttpStatus.OK);
