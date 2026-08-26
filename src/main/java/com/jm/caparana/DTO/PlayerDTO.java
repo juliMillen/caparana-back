@@ -12,6 +12,4 @@ public class PlayerDTO extends Person {
 
     private int num;
 
-    private CategorityDTO categority;
-
 }

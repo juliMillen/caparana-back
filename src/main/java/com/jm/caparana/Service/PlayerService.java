@@ -3,6 +3,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Exception.CategorityException;
 import com.jm.caparana.Exception.PlayerException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ICategorityRepository;
@@ -36,17 +37,14 @@ public class PlayerService {
 
     public PlayerDTO save(Long idCategority,PlayerDTO playerDTO){
 
-        Categority categority = Categority.builder()
-                .idCategority(playerDTO.getCategority().getIdCategority())
-                .nameCategority(playerDTO.getCategority().getNameCategority())
-                .build();
+        Categority categority = categorityRepository.findById(idCategority).orElseThrow(()-> new CategorityException("Categority not found"));
 
         Player toCreate = Player.builder()
                 .name(playerDTO.getName())
                 .surname(playerDTO.getSurname())
                 .position(playerDTO.getPosition())
                 .num(playerDTO.getNum())
-                .urlImagen(playerDTO.getUrlImage())
+                .urlImage(playerDTO.getUrlImage())
                 .categority(categority)
                 .build();
 
@@ -55,18 +53,12 @@ public class PlayerService {
 
     public PlayerDTO updatePlayer(Long idPlayer, PlayerDTO playerDTO){
 
-        Categority categority = Categority.builder()
-                .idCategority(playerDTO.getCategority().getIdCategority())
-                .nameCategority(playerDTO.getCategority().getNameCategority())
-                .build();
-
         Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("Player not found"));
         toUpdate.setName(playerDTO.getName());
         toUpdate.setSurname(playerDTO.getSurname());
         toUpdate.setPosition(playerDTO.getPosition());
         toUpdate.setNum(playerDTO.getNum());
-        toUpdate.setUrlImagen(playerDTO.getUrlImage());
-        toUpdate.setCategority(categority);
+        toUpdate.setUrlImage(playerDTO.getUrlImage());
         return Mapper.mapToPlayerDTO(playerRepository.save(toUpdate));
 
     }

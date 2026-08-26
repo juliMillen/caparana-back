@@ -68,7 +68,6 @@ public class Mapper {
                 .position(player.getPosition())
                 .num(player.getNum())
                 .urlImage(player.getUrlImage())
-                .categority(mapToCategorityDTO(player.getCategority()))
                 .build();
 
     }
