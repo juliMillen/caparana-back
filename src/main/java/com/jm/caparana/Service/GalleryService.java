@@ -19,6 +19,15 @@ public class GalleryService {
     @Autowired
     private IGalleryRepository galleryRepository;
 
+    public GalleryPhotoDTO getGallery(Long idGallery){
+        if(idGallery == null || idGallery <= 0){
+            throw new GalleryException("Gallery not found");
+        }
+        return Mapper.mapToGalleryDTO(galleryRepository.findById(idGallery).orElseThrow(() -> new GalleryException("Gallery not found")));
+    }
+
+
+
     public GalleryPhotoDTO create(GalleryPhotoDTO galleryDTO){
 
         List<Photo> photos = galleryDTO.getPhotoDTOS().stream()

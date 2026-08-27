@@ -16,13 +16,20 @@ public class GalleryController {
     @Autowired
     private GalleryService galleryService;
 
+
+    @GetMapping("/{idGallery}")
+    public ResponseEntity<GalleryPhotoDTO> getGallery(@PathVariable Long idGallery){
+        return new ResponseEntity<>(galleryService.getGallery(idGallery),HttpStatus.OK);
+    }
+
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<GalleryPhotoDTO> createGallery(@RequestBody GalleryPhotoDTO gallery){
         return new ResponseEntity<>(galleryService.create(gallery), HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<GalleryPhotoDTO> updateGallery(@PathVariable Long id,  @RequestBody GalleryPhotoDTO gallery){
         return new ResponseEntity<>(galleryService.updateGallery(id,gallery),HttpStatus.OK);
     }
@@ -30,7 +37,7 @@ public class GalleryController {
 
     //THIS IS FOR TEST IN THE BACKEND
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteGallery(@PathVariable Long id){
         galleryService.deleteGallery(id);
         return new ResponseEntity<>("Gallery deleted succesfully", HttpStatus.NOT_FOUND);
