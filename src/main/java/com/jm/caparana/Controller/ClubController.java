@@ -28,7 +28,7 @@ public class ClubController {
         return new ResponseEntity<>(clubService.save(club),HttpStatus.CREATED);
     }
 
-    @PatchMapping("/update")
+    @PatchMapping("/update/{idClub}")
     @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<ClubDTO> updateClub(@PathVariable Long idClub,@RequestBody ClubDTO club){
         return new ResponseEntity<>(clubService.updateClub(idClub,club),HttpStatus.OK);
@@ -36,7 +36,7 @@ public class ClubController {
 
 
     // THIS IS UNIQUE FOR TEST IN THE BACKEND
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteClub(@PathVariable Long id){
         clubService.deleteClub(id);

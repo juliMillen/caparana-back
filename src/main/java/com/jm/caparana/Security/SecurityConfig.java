@@ -29,9 +29,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, JwtUtils jwtUtils){
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
+                .cors(cors ->{})
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH,"/api/**").authenticated()

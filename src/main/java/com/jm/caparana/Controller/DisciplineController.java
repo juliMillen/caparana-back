@@ -45,6 +45,6 @@ public class DisciplineController {
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteDiscipline(@PathVariable Long id){
         disciplineService.deleteDiscipline(id);
-        return new ResponseEntity<>("Discipline deleted succesfully", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Discipline deleted succesfully", HttpStatus.NO_CONTENT);
     }
 }

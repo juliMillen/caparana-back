@@ -55,6 +55,8 @@ public class JwtUtils {
             DecodedJWT decodedJWT = verifier.verify(token);
             return decodedJWT;
         }catch(JWTVerificationException ex){
+
+
             throw new JWTVerificationException("Invalid token. Not authorized");
         }
     }
