@@ -5,6 +5,7 @@ import com.jm.caparana.Entity.Sponsor;
 import com.jm.caparana.Exception.SponsorException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ISponsorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Service
 public class SponsorService {
 
+    @Autowired
     private ISponsorRepository sponsorRepository;
 
     public List<SponsorDTO> finAllSponsors(){

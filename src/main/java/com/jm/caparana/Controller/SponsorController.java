@@ -29,13 +29,13 @@ public class SponsorController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<SponsorDTO> createSponsor(@RequestBody SponsorDTO sponsor){
         return new ResponseEntity<>(sponsorService.createSponsor(sponsor),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteSponsor(@PathVariable Long id){
         sponsorService.deleteSponsor(id);
         return new ResponseEntity<>("Sponsor deleted succesfully",HttpStatus.NOT_FOUND);
