@@ -7,7 +7,9 @@ import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ISponsorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -15,6 +17,9 @@ public class SponsorService {
 
     @Autowired
     private ISponsorRepository sponsorRepository;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public List<SponsorDTO> finAllSponsors(){
         return sponsorRepository.findAll().stream()
@@ -29,10 +34,12 @@ public class SponsorService {
         return Mapper.mapToSponsorDTO(sponsorRepository.findById(id).orElseThrow(()-> new SponsorException("Sponsor not found")));
     }
 
-    public SponsorDTO createSponsor(SponsorDTO sponsorDTO){
+    public SponsorDTO createSponsor(String name, MultipartFile image) throws IOException {
+        String imageUrl = cloudinaryService.uploadImage(image);
+
         Sponsor toCreate = Sponsor.builder()
-                .name(sponsorDTO.getName())
-                .urlImage(sponsorDTO.getUrlImage())
+                .name(name)
+                .urlImage(imageUrl)
                 .build();
         return Mapper.mapToSponsorDTO(sponsorRepository.save(toCreate));
     }
