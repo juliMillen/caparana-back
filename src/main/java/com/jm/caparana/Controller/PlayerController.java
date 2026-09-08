@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,8 +33,10 @@ public class PlayerController {
 
     @PostMapping("/create/{idCategority}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestBody PlayerDTO player){
-        return new ResponseEntity<>(playerService.save(idCategority,player),HttpStatus.CREATED);
+    public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestParam("name") String name,
+                                                  @RequestParam("surname") String surname, @RequestParam("position")String position,
+                                                  @RequestParam("num") int num, @RequestParam("image") MultipartFile image) throws IOException {
+        return new ResponseEntity<>(playerService.save(idCategority,name,surname,position,num,image),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{idPlayer}")

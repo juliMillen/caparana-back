@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,8 +34,9 @@ public class ExecutiveController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestBody ExecutiveDTO executive){
-        return new ResponseEntity<>(executiveService.save(executive),HttpStatus.CREATED);
+    public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("position") String position,
+                                                      @RequestParam("image")MultipartFile image) throws IOException {
+        return new ResponseEntity<>(executiveService.save(name,surname,position,image),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
