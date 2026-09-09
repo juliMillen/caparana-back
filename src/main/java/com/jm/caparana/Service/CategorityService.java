@@ -40,7 +40,6 @@ public class CategorityService {
 
         List<Player> players = categorityDTO.getPlayerList().stream()
                 .map(playerDTO -> Player.builder()
-                        .idPlayer(playerDTO.getIdPlayer())
                         .name(playerDTO.getName())
                         .surname(playerDTO.getSurname())
                         .position(playerDTO.getPosition())
