@@ -32,7 +32,7 @@ public class PlayerController {
     }
 
     @PostMapping("/create/{idCategority}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestParam("name") String name,
                                                   @RequestParam("surname") String surname, @RequestParam("position")String position,
                                                   @RequestParam("num") int num, @RequestParam("image") MultipartFile image) throws IOException {
@@ -40,13 +40,13 @@ public class PlayerController {
     }
 
     @PatchMapping("/update/{idPlayer}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestBody PlayerDTO player){
         return new ResponseEntity<>(playerService.updatePlayer(idPlayer,player), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deletePlayer(@PathVariable Long id){
         playerService.deletePlayer(id);
         return new ResponseEntity<>("Player deleted succesfully", HttpStatus.NOT_FOUND);
