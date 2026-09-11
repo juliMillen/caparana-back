@@ -7,7 +7,10 @@ import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,6 +18,9 @@ public class ReportService {
 
     @Autowired
     private IReportRepository reportRepository;
+
+    @Autowired
+    private CloudinaryService cloudinaryService;
 
     public List<ReportDTO> findAllReports(){
         return reportRepository.findAll().stream()
@@ -29,13 +35,14 @@ public class ReportService {
         return Mapper.mapToReportDTO(reportRepository.findById(id).orElseThrow(() -> new ReportException("report not found")));
     }
 
-    public ReportDTO saveDTO(ReportDTO newReport){
+    public ReportDTO saveDTO(String title, String description, LocalDate publicationDate, MultipartFile image)throws IOException {
 
+        String imageUrl = cloudinaryService.uploadImage(image);
         Report toCreate = Report.builder()
-                .title(newReport.getTitle())
-                .description(newReport.getDescription())
-                .publicationDate(newReport.getPublicationDate())
-                .urlImage(newReport.getUrlImage())
+                .title(title)
+                .description(description)
+                .publicationDate(publicationDate)
+                .urlImage(imageUrl)
                 .build();
         return Mapper.mapToReportDTO(reportRepository.save(toCreate));
     }

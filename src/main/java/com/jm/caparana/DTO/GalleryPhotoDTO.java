@@ -18,4 +18,6 @@ public class GalleryPhotoDTO {
     private LocalDate publicationDate;
 
     private List<PhotoDTO> photoDTOS;
+
+    private List<Long> idPhotos;
 }
