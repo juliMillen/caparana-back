@@ -37,6 +37,13 @@ public class PhotoController {
         return new ResponseEntity<>(photoService.createPhoto(description,image),HttpStatus.CREATED);
     }
 
+    @PostMapping("/gallery/{idGallery}")
+    @PreAuthorize("hasAuthority('CREATE')")
+    public ResponseEntity<PhotoDTO> addPhotoGallery(@PathVariable Long idGallery, @RequestParam("description") String description,
+                                                    @RequestParam("image") MultipartFile image)throws IOException{
+        return new ResponseEntity<>(photoService.addPhotoGallery(idGallery,description,image),HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deletePhoto(@PathVariable Long id){

@@ -17,7 +17,7 @@ public class GalleryPhotoDTO {
 
     private LocalDate publicationDate;
 
-    private List<PhotoDTO> photoDTOS;
+    private List<PhotoDTO> photosDTO;
 
     private List<Long> idPhotos;
 }

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/gallery")
 public class GalleryController {
@@ -16,6 +18,11 @@ public class GalleryController {
     @Autowired
     private GalleryService galleryService;
 
+    @GetMapping("")
+    public ResponseEntity<List<GalleryPhotoDTO>> getGalleries(){
+        List<GalleryPhotoDTO> galleries = galleryService.findAllGalleries();
+        return new ResponseEntity<>(galleries,HttpStatus.OK);
+    }
 
     @GetMapping("/{idGallery}")
     public ResponseEntity<GalleryPhotoDTO> getGallery(@PathVariable Long idGallery){
@@ -35,7 +42,6 @@ public class GalleryController {
     }
 
 
-    //THIS IS FOR TEST IN THE BACKEND
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deleteGallery(@PathVariable Long id){

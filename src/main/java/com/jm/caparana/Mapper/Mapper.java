@@ -123,7 +123,7 @@ public class Mapper {
                 .idGallery(gallery.getIdGallery())
                 .title(gallery.getTitle())
                 .publicationDate(gallery.getPublicationDate())
-                .photoDTOS(list)
+                .photosDTO(list)
                 .build();
     }
 

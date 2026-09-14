@@ -19,6 +19,12 @@ public class GalleryService {
     @Autowired
     private IGalleryRepository galleryRepository;
 
+    public List<GalleryPhotoDTO> findAllGalleries(){
+        return galleryRepository.findAll().stream()
+                .map(Mapper::mapToGalleryDTO)
+                .toList();
+    }
+
     public GalleryPhotoDTO getGallery(Long idGallery){
         if(idGallery == null || idGallery <= 0){
             throw new GalleryException("Gallery not found");
@@ -30,7 +36,7 @@ public class GalleryService {
 
     public GalleryPhotoDTO create(GalleryPhotoDTO galleryDTO){
 
-        List<Photo> photos = galleryDTO.getPhotoDTOS().stream()
+        List<Photo> photos = galleryDTO.getPhotosDTO().stream()
                 .map(photoDTO -> Photo.builder()
                         .idPhoto(photoDTO.getIdPhoto())
                         .description(photoDTO.getDescription())
@@ -39,7 +45,6 @@ public class GalleryService {
                 .collect(Collectors.toList());
 
         GalleryPhoto toCreate = GalleryPhoto.builder()
-                .idGallery(galleryDTO.getIdGallery())
                 .title(galleryDTO.getTitle())
                 .publicationDate(galleryDTO.getPublicationDate())
                 .photos(photos)
@@ -50,7 +55,7 @@ public class GalleryService {
     public GalleryPhotoDTO updateGallery(Long idGallery, GalleryPhotoDTO gallery){
         GalleryPhoto toUpdate = galleryRepository.findById(idGallery).orElseThrow(() -> new GalleryException("Gallery not found"));
 
-        List<Photo> photos = gallery.getPhotoDTOS().stream()
+        List<Photo> photos = gallery.getPhotosDTO().stream()
                         .map(photoDTO -> Photo.builder()
                                 .idPhoto(photoDTO.getIdPhoto())
                                 .description(photoDTO.getDescription())
