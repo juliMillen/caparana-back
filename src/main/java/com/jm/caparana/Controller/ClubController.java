@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/club")
 public class ClubController {
@@ -24,7 +26,12 @@ public class ClubController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<ClubDTO> createClub(@RequestBody ClubDTO club){
+    public ResponseEntity<ClubDTO> createClub(@RequestParam("name") String name, @RequestParam("fundationDate")LocalDate fundationDate,
+                                              @RequestParam("history")String history, @RequestParam("stadiumHistory")String stadiumHistory,
+                                              @RequestParam("colorsHistory")String colorsHistory,@RequestParam("titles")String[] titles,
+                                              @RequestParam("urlImageStadium")String urlImageStadium,
+                                              @RequestParam("urlImageColors")String urlImageColors)
+    {
         return new ResponseEntity<>(clubService.save(club),HttpStatus.CREATED);
     }
 

@@ -7,7 +7,11 @@ import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IClubRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -16,6 +20,9 @@ public class ClubService {
     @Autowired
     private IClubRepository clubRepository;
 
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
     public ClubDTO findClubById(Long idClub){
         if(idClub == null || idClub <= 0){
             throw new RuntimeException("id invalid");
@@ -23,16 +30,20 @@ public class ClubService {
         return Mapper.mapToClubDTO(clubRepository.findById(idClub).orElseThrow(() -> new ClubException("Club not found")));
     }
 
-    public ClubDTO save(ClubDTO clubDTO){
+    public ClubDTO save(String name, LocalDate fundationDate, String history, String stadiumHistory,
+                        String colorsHistory, List<String> titles, MultipartFile urlImageStadium, MultipartFile urlImageShield) throws IOException {
+        String imageStadium = cloudinaryService.uploadImage(urlImageStadium);
+        String imageShield = cloudinaryService.uploadImage(urlImageShield);
+
         Club nuevo = Club.builder()
-                .name(clubDTO.getName())
-                .fundationDate(clubDTO.getFundationDate())
-                .history(clubDTO.getHistory())
-                .stadiumHistory(clubDTO.getStadiumHistory())
-                .colorsHistory(clubDTO.getColorsHistory())
-                .titles(clubDTO.getTitles())
-                .urlImageShield(clubDTO.getUrlImageStadium())
-                .urlImageStadium(clubDTO.getUrlImageStadium())
+                .name(name)
+                .fundationDate(fundationDate)
+                .history(history)
+                .stadiumHistory(stadiumHistory)
+                .colorsHistory(colorsHistory)
+                .titles(titles)
+                .urlImageShield(imageShield)
+                .urlImageStadium(imageStadium)
                 .build();
         return Mapper.mapToClubDTO(clubRepository.save(nuevo));
     }
