@@ -23,6 +23,8 @@ public class Mapper {
                 .stadiumHistory(club.getStadiumHistory())
                 .colorsHistory(club.getColorsHistory())
                 .titles(club.getTitles())
+                .urlImageStadium(club.getUrlImageStadium())
+                .urlImageShield(club.getUrlImageShield())
                 .build();
     }
 
