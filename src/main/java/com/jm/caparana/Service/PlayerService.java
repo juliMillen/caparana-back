@@ -56,14 +56,19 @@ public class PlayerService {
         return Mapper.mapToPlayerDTO(playerRepository.save(toCreate));
     }
 
-    public PlayerDTO updatePlayer(Long idPlayer, PlayerDTO playerDTO){
+    public PlayerDTO updatePlayer(Long idPlayer, String name, String surname, String position, int num, MultipartFile image)throws IOException{
 
         Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("Player not found"));
-        toUpdate.setName(playerDTO.getName());
-        toUpdate.setSurname(playerDTO.getSurname());
-        toUpdate.setPosition(playerDTO.getPosition());
-        toUpdate.setNum(playerDTO.getNum());
-        toUpdate.setUrlImage(playerDTO.getUrlImage());
+
+        toUpdate.setName(name);
+        toUpdate.setSurname(surname);
+        toUpdate.setPosition(position);
+        toUpdate.setNum(num);
+
+        if(image != null && !image.isEmpty()){
+            String urlImage = cloudinaryService.uploadImage(image);
+            toUpdate.setUrlImage(urlImage);
+        }
         return Mapper.mapToPlayerDTO(playerRepository.save(toUpdate));
 
     }

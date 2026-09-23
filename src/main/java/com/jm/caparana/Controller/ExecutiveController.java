@@ -35,14 +35,16 @@ public class ExecutiveController {
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("position") String position,
-                                                      @RequestParam("image")MultipartFile image) throws IOException {
+                                                      @RequestParam(value = "image", required = false)MultipartFile image) throws IOException {
         return new ResponseEntity<>(executiveService.save(name,surname,position,image),HttpStatus.CREATED);
     }
 
     @PatchMapping("/update/{id}")
     @PreAuthorize("hasAuthority('UPDATE')")
-    public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestBody ExecutiveDTO executive){
-        return new ResponseEntity<>(executiveService.updateExecutive(id,executive), HttpStatus.OK);
+    public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestParam("name")String name, @RequestParam("surname") String surname,
+                                                        @RequestParam("position")String position,
+                                                        @RequestParam(value= "image", required = false)MultipartFile image)throws IOException{
+        return new ResponseEntity<>(executiveService.updateExecutive(id,name,surname,position,image), HttpStatus.OK);
     }
 
 

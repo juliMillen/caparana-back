@@ -41,8 +41,9 @@ public class PlayerController {
 
     @PatchMapping("/update/{idPlayer}")
     @PreAuthorize("hasAuthority('UPDATE')")
-    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestBody PlayerDTO player){
-        return new ResponseEntity<>(playerService.updatePlayer(idPlayer,player), HttpStatus.OK);
+    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestParam("name")String name, @RequestParam("surname")String surname,
+                                                  @RequestParam("position")String position, @RequestParam("num")int num, @RequestParam(value="image", required = false)MultipartFile image)throws IOException{
+        return new ResponseEntity<>(playerService.updatePlayer(idPlayer,name,surname,position,num,image), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -47,12 +47,19 @@ public class ExecutiveService {
         return Mapper.mapToExecutiveDTO(executiveRepository.save(toCreate));
     }
 
-    public ExecutiveDTO updateExecutive(Long idExecutive, ExecutiveDTO executiveDTO){
+    public ExecutiveDTO updateExecutive(Long idExecutive, String name, String surname, String position, MultipartFile image)throws IOException{
         Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("Executive not found"));
-        toUpdate.setName(executiveDTO.getName());
-        toUpdate.setSurname(executiveDTO.getSurname());
-        toUpdate.setPosition(executiveDTO.getPosition());
-        toUpdate.setUrlImage(executiveDTO.getUrlImage());
+
+
+        toUpdate.setName(name);
+        toUpdate.setSurname(surname);
+        toUpdate.setPosition(position);
+
+        if(image != null && !image.isEmpty()){
+            String urlImage = cloudinaryService.uploadImage(image);
+            toUpdate.setUrlImage(urlImage);
+        }
+
         return Mapper.mapToExecutiveDTO(executiveRepository.save(toUpdate));
     }
 
