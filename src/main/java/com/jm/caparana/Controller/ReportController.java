@@ -4,6 +4,7 @@ import com.jm.caparana.DTO.ReportDTO;
 import com.jm.caparana.Entity.Report;
 import com.jm.caparana.Service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,8 +42,9 @@ public class ReportController {
 
     @PatchMapping("/update/{id}")
     @PreAuthorize("hasAuthority('UPDATE')")
-    public ResponseEntity<ReportDTO> updateReport(@PathVariable Long id, @RequestBody ReportDTO report){
-        return new ResponseEntity<>(reportService.updateReport(id,report),HttpStatus.OK);
+    public ResponseEntity<ReportDTO> updateReport(@PathVariable Long id, @RequestParam("title")String title, @RequestParam("description")String description,
+                                                  @RequestParam("publicationDate")LocalDate publicationDate, @RequestParam(value="image",required = false)MultipartFile image)throws IOException{
+        return new ResponseEntity<>(reportService.updateReport(id,title,description,publicationDate,image),HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

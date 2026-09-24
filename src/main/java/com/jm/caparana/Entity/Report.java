@@ -1,9 +1,6 @@
 package com.jm.caparana.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -20,6 +17,7 @@ public class Report {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private LocalDate publicationDate;

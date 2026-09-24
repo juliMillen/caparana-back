@@ -47,12 +47,16 @@ public class ReportService {
         return Mapper.mapToReportDTO(reportRepository.save(toCreate));
     }
 
-    public ReportDTO updateReport(Long idReport, ReportDTO reportDTO){
+    public ReportDTO updateReport(Long idReport, String title, String description, LocalDate publicationDate, MultipartFile image)throws IOException{
         Report toUpdate = reportRepository.findById(idReport).orElseThrow(() -> new ReportException("Report not found"));
-        toUpdate.setTitle(reportDTO.getTitle());
-        toUpdate.setDescription(reportDTO.getDescription());
-        toUpdate.setPublicationDate(reportDTO.getPublicationDate());
-        toUpdate.setUrlImage(reportDTO.getUrlImage());
+        toUpdate.setTitle(title);
+        toUpdate.setDescription(description);
+        toUpdate.setPublicationDate(publicationDate);
+
+        if(image != null && !image.isEmpty()){
+            String urlImage = cloudinaryService.uploadImage(image);
+            toUpdate.setUrlImage(urlImage);
+        }
         return Mapper.mapToReportDTO(reportRepository.save(toUpdate));
     }
 
