@@ -22,4 +22,7 @@ public class Categority {
 
     @OneToMany(mappedBy = "categority", cascade = CascadeType.ALL)
     private List<Player> playerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "categority", cascade = CascadeType.ALL)
+    private List<Staff> technicalStaff;
 }

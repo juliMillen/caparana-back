@@ -50,6 +50,6 @@ public class PlayerController {
     @PreAuthorize("hasAuthority('DELETE')")
     public ResponseEntity<String> deletePlayer(@PathVariable Long id){
         playerService.deletePlayer(id);
-        return new ResponseEntity<>("Player deleted succesfully", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Player deleted succesfully", HttpStatus.NO_CONTENT);
     }
 }

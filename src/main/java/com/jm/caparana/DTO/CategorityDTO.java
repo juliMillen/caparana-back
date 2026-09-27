@@ -16,4 +16,6 @@ public class CategorityDTO {
     private String nameCategority;
 
     private List<PlayerDTO> playerList = new ArrayList<>();
+
+    private List<StaffDTO> staff = new ArrayList<>();
 }

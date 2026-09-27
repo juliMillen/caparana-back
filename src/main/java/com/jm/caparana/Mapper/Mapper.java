@@ -47,10 +47,22 @@ public class Mapper {
                         .build()
         ).collect(Collectors.toList());
 
+        List<StaffDTO> listStaff = categority.getTechnicalStaff().stream().map( staff ->
+                StaffDTO.builder()
+                        .idStaff(staff.getIdStaff())
+                        .name(staff.getName())
+                        .surname(staff.getSurname())
+                        .position(staff.getPosition())
+                        .role(staff.getRole())
+                        .urlImage(staff.getUrlImage())
+                        .build()
+        ).collect(Collectors.toList());
+
         return CategorityDTO.builder()
                 .idCategority(categority.getIdCategority())
                 .nameCategority(categority.getNameCategority())
                 .playerList(list)
+                .staff(listStaff)
                 .build();
     }
 
@@ -72,6 +84,22 @@ public class Mapper {
                 .urlImage(player.getUrlImage())
                 .build();
 
+    }
+
+    //mapeo de Staff a StaffDTO
+
+    static public StaffDTO mapToStaffDTO(Staff staff){
+        if(staff == null){
+            throw new IllegalArgumentException("Staff is null");
+        }
+        return StaffDTO.builder()
+                .idStaff(staff.getIdStaff())
+                .name(staff.getName())
+                .surname(staff.getSurname())
+                .position(staff.getPosition())
+                .role(staff.getRole())
+                .urlImage(staff.getUrlImage())
+                .build();
     }
 
     //mapeo de Discipline a DisciplineDTO
