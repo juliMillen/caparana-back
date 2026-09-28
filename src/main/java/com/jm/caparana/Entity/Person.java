@@ -19,7 +19,5 @@ public abstract class Person {
 
     protected String surname;
 
-    protected String position;
-
     protected String urlImage;
 }

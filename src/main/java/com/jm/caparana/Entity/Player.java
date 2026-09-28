@@ -1,6 +1,6 @@
 package com.jm.caparana.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jm.caparana.Enum.PlayerPosition;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -17,6 +17,8 @@ public class Player extends Person {
     private Long idPlayer;
 
     private int num;
+
+    private PlayerPosition position;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCategority")

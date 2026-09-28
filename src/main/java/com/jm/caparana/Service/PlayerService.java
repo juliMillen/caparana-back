@@ -3,6 +3,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Enum.PlayerPosition;
 import com.jm.caparana.Exception.CategorityException;
 import com.jm.caparana.Exception.PlayerException;
 import com.jm.caparana.Mapper.Mapper;
@@ -40,7 +41,7 @@ public class PlayerService {
         return Mapper.mapToPlayerDTO(playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("player not found")));
     }
 
-    public PlayerDTO save(Long idCategority, String name, String surname, String position, int num, MultipartFile image)throws IOException {
+    public PlayerDTO save(Long idCategority, String name, String surname, PlayerPosition position, int num, MultipartFile image)throws IOException {
         String urlImage = cloudinaryService.uploadImage(image);
         Categority categority = categorityRepository.findById(idCategority).orElseThrow(()-> new CategorityException("Categority not found"));
 
@@ -56,7 +57,7 @@ public class PlayerService {
         return Mapper.mapToPlayerDTO(playerRepository.save(toCreate));
     }
 
-    public PlayerDTO updatePlayer(Long idPlayer, String name, String surname, String position, int num, MultipartFile image)throws IOException{
+    public PlayerDTO updatePlayer(Long idPlayer, String name, String surname, PlayerPosition position, int num, MultipartFile image)throws IOException{
 
         Player toUpdate = playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("Player not found"));
 

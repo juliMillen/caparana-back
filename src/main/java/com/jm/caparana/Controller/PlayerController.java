@@ -2,6 +2,7 @@ package com.jm.caparana.Controller;
 
 import com.jm.caparana.DTO.PlayerDTO;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Enum.PlayerPosition;
 import com.jm.caparana.Service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class PlayerController {
     @PostMapping("/create/{idCategority}")
     @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<PlayerDTO> createPlayer(@PathVariable Long idCategority, @RequestParam("name") String name,
-                                                  @RequestParam("surname") String surname, @RequestParam("position")String position,
+                                                  @RequestParam("surname") String surname, @RequestParam("position") PlayerPosition position,
                                                   @RequestParam("num") int num, @RequestParam("image") MultipartFile image) throws IOException {
         return new ResponseEntity<>(playerService.save(idCategority,name,surname,position,num,image),HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class PlayerController {
     @PatchMapping("/update/{idPlayer}")
     @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable Long idPlayer,@RequestParam("name")String name, @RequestParam("surname")String surname,
-                                                  @RequestParam("position")String position, @RequestParam("num")int num, @RequestParam(value="image", required = false)MultipartFile image)throws IOException{
+                                                  @RequestParam("position")PlayerPosition position, @RequestParam("num")int num, @RequestParam(value="image", required = false)MultipartFile image)throws IOException{
         return new ResponseEntity<>(playerService.updatePlayer(idPlayer,name,surname,position,num,image), HttpStatus.OK);
     }
 

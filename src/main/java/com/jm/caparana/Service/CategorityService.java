@@ -3,6 +3,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.CategorityDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Player;
+import com.jm.caparana.Entity.Staff;
 import com.jm.caparana.Exception.CategorityException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.ICategorityRepository;
@@ -50,6 +51,18 @@ public class CategorityService {
                 .collect(Collectors.toList());
         toCreate.setPlayerList(players);
 
+        List<Staff>staff = categorityDTO.getTechnicalStaff().stream()
+                .map(staffDTO -> Staff.builder()
+                        .name(staffDTO.getName())
+                        .surname(staffDTO.getSurname())
+                        .position(staffDTO.getPosition())
+                        .position(staffDTO.getPosition())
+                        .urlImage(staffDTO.getUrlImage())
+                        .categority(toCreate)
+                        .build())
+                .collect(Collectors.toList());
+        toCreate.setTechnicalStaff(staff);
+
         return Mapper.mapToCategorityDTO(categorityRepository.save(toCreate));
     }
 
@@ -68,9 +81,19 @@ public class CategorityService {
                         .categority(toUpdate)
                         .build())
                 .collect(Collectors.toList());
-
-
         toUpdate.setPlayerList(players);
+
+        List<Staff>staff = categorityDTO.getTechnicalStaff().stream()
+                .map(staffDTO -> Staff.builder()
+                        .name(staffDTO.getName())
+                        .surname(staffDTO.getSurname())
+                        .position(staffDTO.getPosition())
+                        .position(staffDTO.getPosition())
+                        .urlImage(staffDTO.getUrlImage())
+                        .categority(toUpdate)
+                        .build())
+                .collect(Collectors.toList());
+        toUpdate.setTechnicalStaff(staff);
         return Mapper.mapToCategorityDTO(categorityRepository.save(toUpdate));
 
     }

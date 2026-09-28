@@ -2,6 +2,7 @@ package com.jm.caparana.Service;
 
 import com.jm.caparana.DTO.ExecutiveDTO;
 import com.jm.caparana.Entity.Executive;
+import com.jm.caparana.Enum.ExecutivePosition;
 import com.jm.caparana.Exception.ExecutiveException;
 import com.jm.caparana.Mapper.Mapper;
 import com.jm.caparana.Repository.IExecutiveRepository;
@@ -34,7 +35,7 @@ public class ExecutiveService {
         return Mapper.mapToExecutiveDTO(executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("executive not found")));
     }
 
-    public ExecutiveDTO save(String name,String surname, String position, MultipartFile image) throws IOException {
+    public ExecutiveDTO save(String name, String surname, ExecutivePosition position, MultipartFile image) throws IOException {
 
         String imageUrl = cloudinaryService.uploadImage(image);
 
@@ -47,7 +48,7 @@ public class ExecutiveService {
         return Mapper.mapToExecutiveDTO(executiveRepository.save(toCreate));
     }
 
-    public ExecutiveDTO updateExecutive(Long idExecutive, String name, String surname, String position, MultipartFile image)throws IOException{
+    public ExecutiveDTO updateExecutive(Long idExecutive, String name, String surname, ExecutivePosition position, MultipartFile image)throws IOException{
         Executive toUpdate = executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("Executive not found"));
 
 

@@ -1,6 +1,6 @@
 package com.jm.caparana.Entity;
 
-import com.jm.caparana.Enum.StaffRole;
+import com.jm.caparana.Enum.StaffPosition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class Staff extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idStaff;
 
-    private StaffRole role;
+    private StaffPosition position;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCategority")

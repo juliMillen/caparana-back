@@ -1,7 +1,7 @@
 package com.jm.caparana.DTO;
 
 import com.jm.caparana.Entity.Person;
-import com.jm.caparana.Enum.StaffRole;
+import com.jm.caparana.Enum.StaffPosition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +16,5 @@ public class StaffDTO extends Person {
 
     private Long idStaff;
 
-    private StaffRole role;
+    private StaffPosition position;
 }

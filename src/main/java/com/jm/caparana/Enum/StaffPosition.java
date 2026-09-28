@@ -1,6 +1,6 @@
 package com.jm.caparana.Enum;
 
-public enum StaffRole {
+public enum StaffPosition {
     HeadCoach,
     AssistantCoach,
     GoalkeeperCoach,

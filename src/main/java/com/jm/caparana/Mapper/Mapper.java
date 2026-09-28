@@ -53,7 +53,7 @@ public class Mapper {
                         .name(staff.getName())
                         .surname(staff.getSurname())
                         .position(staff.getPosition())
-                        .role(staff.getRole())
+                        .position(staff.getPosition())
                         .urlImage(staff.getUrlImage())
                         .build()
         ).collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class Mapper {
                 .idCategority(categority.getIdCategority())
                 .nameCategority(categority.getNameCategority())
                 .playerList(list)
-                .staff(listStaff)
+                .technicalStaff(listStaff)
                 .build();
     }
 
@@ -97,7 +97,7 @@ public class Mapper {
                 .name(staff.getName())
                 .surname(staff.getSurname())
                 .position(staff.getPosition())
-                .role(staff.getRole())
+                .position(staff.getPosition())
                 .urlImage(staff.getUrlImage())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.jm.caparana.Entity;
 
+import com.jm.caparana.Enum.ExecutivePosition;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,5 +19,7 @@ public class Executive extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idExecutive;
+
+    private ExecutivePosition position;
 
 }

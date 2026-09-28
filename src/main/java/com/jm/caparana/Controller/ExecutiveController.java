@@ -2,6 +2,7 @@ package com.jm.caparana.Controller;
 
 import com.jm.caparana.DTO.ExecutiveDTO;
 import com.jm.caparana.Entity.Executive;
+import com.jm.caparana.Enum.ExecutivePosition;
 import com.jm.caparana.Service.ExecutiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ExecutiveController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('CREATE')")
-    public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("position") String position,
+    public ResponseEntity<ExecutiveDTO> saveExecutive(@RequestParam("name") String name, @RequestParam("surname") String surname, @RequestParam("position") ExecutivePosition position,
                                                       @RequestParam(value = "image", required = false)MultipartFile image) throws IOException {
         return new ResponseEntity<>(executiveService.save(name,surname,position,image),HttpStatus.CREATED);
     }
@@ -42,7 +43,7 @@ public class ExecutiveController {
     @PatchMapping("/update/{id}")
     @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<ExecutiveDTO> updateExecutive(@PathVariable Long id, @RequestParam("name")String name, @RequestParam("surname") String surname,
-                                                        @RequestParam("position")String position,
+                                                        @RequestParam("position")ExecutivePosition position,
                                                         @RequestParam(value= "image", required = false)MultipartFile image)throws IOException{
         return new ResponseEntity<>(executiveService.updateExecutive(id,name,surname,position,image), HttpStatus.OK);
     }

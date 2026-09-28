@@ -4,7 +4,7 @@ package com.jm.caparana.Service;
 import com.jm.caparana.DTO.StaffDTO;
 import com.jm.caparana.Entity.Categority;
 import com.jm.caparana.Entity.Staff;
-import com.jm.caparana.Enum.StaffRole;
+import com.jm.caparana.Enum.StaffPosition;
 import com.jm.caparana.Exception.CategorityException;
 import com.jm.caparana.Exception.StaffException;
 import com.jm.caparana.Mapper.Mapper;
@@ -26,6 +26,7 @@ public class StaffService {
     @Autowired
     private CloudinaryService cloudinaryService;
 
+    @Autowired
     private ICategorityRepository categorityRepository;
 
     public List<StaffDTO> findAllStaff(){
@@ -41,7 +42,7 @@ public class StaffService {
         return Mapper.mapToStaffDTO(staffRepository.findById(idStaff).orElseThrow(() -> new StaffException("Staff not found")));
     }
 
-    public StaffDTO save(Long idCategority, String name, String surname, String position, StaffRole role, MultipartFile image)throws IOException{
+    public StaffDTO save(Long idCategority, String name, String surname, StaffPosition position, MultipartFile image)throws IOException{
         String urlImage= cloudinaryService.uploadImage(image);
         Categority categority = categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("Categority not found"));
 
@@ -49,19 +50,17 @@ public class StaffService {
                 .name(name)
                 .surname(surname)
                 .position(position)
-                .role(role)
                 .urlImage(urlImage)
                 .categority(categority)
                 .build();
         return Mapper.mapToStaffDTO(staffRepository.save(toCreate));
     }
 
-    public StaffDTO updateStaff(Long idStaff, String name, String surname, String position, StaffRole role, MultipartFile image)throws IOException{
+    public StaffDTO updateStaff(Long idStaff, String name, String surname, StaffPosition position, MultipartFile image)throws IOException{
         Staff toUpdate = staffRepository.findById(idStaff).orElseThrow(() -> new StaffException("Staff not found"));
         toUpdate.setName(name);
         toUpdate.setSurname(surname);
         toUpdate.setPosition(position);
-        toUpdate.setRole(role);
 
         if(image != null && !image.isEmpty()){
             String urlImage = cloudinaryService.uploadImage(image);

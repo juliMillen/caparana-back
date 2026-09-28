@@ -17,5 +17,5 @@ public class CategorityDTO {
 
     private List<PlayerDTO> playerList = new ArrayList<>();
 
-    private List<StaffDTO> staff = new ArrayList<>();
+    private List<StaffDTO> technicalStaff = new ArrayList<>();
 }
