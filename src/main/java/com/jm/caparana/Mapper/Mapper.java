@@ -200,4 +200,21 @@ public class Mapper {
                 .urlImage(photo.getUrlImage())
                 .build();
     }
+
+    //mapeo de Match a MatchDTO
+
+    static public MatchDTO mapToMatchDTO(Match match){
+        if (match == null){
+            throw new IllegalArgumentException("Match is null");
+        }
+        return MatchDTO.builder()
+                .idMatch(match.getIdMatch())
+                .rival(match.getRival())
+                .dateTime(match.getDateTime())
+                .location(match.getLocation())
+                .teamGoals(match.getTeamGoals())
+                .rivalGoals(match.getRivalGoals())
+                .state(match.getState())
+                .build();
+    }
 }
