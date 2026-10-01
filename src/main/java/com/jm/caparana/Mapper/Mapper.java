@@ -215,6 +215,7 @@ public class Mapper {
                 .teamGoals(match.getTeamGoals())
                 .rivalGoals(match.getRivalGoals())
                 .state(match.getState())
+                .urlShieldRival(match.getUrlShieldRival())
                 .build();
     }
 }

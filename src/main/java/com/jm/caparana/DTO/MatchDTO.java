@@ -24,4 +24,6 @@ public class MatchDTO {
     private Integer rivalGoals;
 
     private MatchState state;
+
+    private String urlShieldRival;
 }

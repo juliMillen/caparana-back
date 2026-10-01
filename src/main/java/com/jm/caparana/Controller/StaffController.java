@@ -35,7 +35,7 @@ public class StaffController {
     @PreAuthorize("hasAuthority('CREATE')")
     public ResponseEntity<StaffDTO> createStaff(@PathVariable Long idCategority, @RequestParam("name")String name,
                                                 @RequestParam("surname")String surname, @RequestParam("position")StaffPosition position,
-                                                @RequestParam(value = "image",required = false)MultipartFile image)throws IOException {
+                                                @RequestParam("image")MultipartFile image)throws IOException {
        return new ResponseEntity<>(staffService.save(idCategority,name,surname,position,image),HttpStatus.CREATED);
     }
 

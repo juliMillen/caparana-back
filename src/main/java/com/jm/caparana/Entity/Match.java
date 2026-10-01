@@ -32,5 +32,7 @@ public class Match {
 
     private MatchState state;
 
+    private String urlShieldRival;
+
 
 }
