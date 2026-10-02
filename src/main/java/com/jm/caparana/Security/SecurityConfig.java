@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/**").permitAll()
                         .requestMatchers(HttpMethod.PATCH,"/api/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE,"/api/**").authenticated())
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
