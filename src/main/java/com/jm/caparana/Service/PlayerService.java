@@ -35,9 +35,7 @@ public class PlayerService {
     }
 
     public PlayerDTO findPlayerById(Long idPlayer){
-        if(idPlayer == null || idPlayer <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idPlayer);
         return Mapper.mapToPlayerDTO(playerRepository.findById(idPlayer).orElseThrow(() -> new PlayerException("player not found")));
     }
 
@@ -75,9 +73,13 @@ public class PlayerService {
     }
 
     public void deletePlayer(Long idPlayer){
-        if(idPlayer == null || idPlayer <= 0){
-            throw new RuntimeException("id is invalid");
-        }
+        validateId(idPlayer);
         playerRepository.deleteById(idPlayer);
+    }
+
+    public void validateId(Long idPlayer){
+        if(idPlayer == null || idPlayer <= 0){
+            throw new PlayerException("id invalid");
+        }
     }
 }

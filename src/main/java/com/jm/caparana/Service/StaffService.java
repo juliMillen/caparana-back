@@ -36,9 +36,7 @@ public class StaffService {
     }
 
     public StaffDTO findStaffById(Long idStaff){
-        if(idStaff == null || idStaff <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idStaff);
         return Mapper.mapToStaffDTO(staffRepository.findById(idStaff).orElseThrow(() -> new StaffException("Staff not found")));
     }
 
@@ -70,9 +68,13 @@ public class StaffService {
     }
 
     public void deleteStaff(Long idStaff){
-        if(idStaff == null || idStaff <= 0){
-            throw new RuntimeException("id is invalid");
-        }
+        validateId(idStaff);
         staffRepository.deleteById(idStaff);
+    }
+
+    public void validateId(Long idStaff){
+        if(idStaff == null || idStaff <= 0){
+            throw new StaffException("id invalid");
+        }
     }
 }

@@ -23,9 +23,7 @@ public class DisciplineService {
     }
 
     public DisciplineDTO findDisciplineById(Long idDiscipline){
-        if(idDiscipline == null || idDiscipline <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idDiscipline);
         return Mapper.mapToDisciplineDTO(disciplineRepository.findById(idDiscipline).orElseThrow(() -> new DisciplineException("Discipline not found")));
     }
 
@@ -51,10 +49,13 @@ public class DisciplineService {
     }
 
     public void deleteDiscipline(Long idDiscipline){
-        if(idDiscipline == null || idDiscipline <= 0){
-            throw new RuntimeException("id invalid");
-        }
-
+        validateId(idDiscipline);
         disciplineRepository.deleteById(idDiscipline);
+    }
+
+    public void validateId(Long idDiscipline){
+        if(idDiscipline == null || idDiscipline <= 0){
+            throw new DisciplineException("id invalid");
+        }
     }
 }

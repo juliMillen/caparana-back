@@ -25,9 +25,7 @@ public class ClubService {
     private CloudinaryService cloudinaryService;
 
     public ClubDTO findClubById(Long idClub){
-        if(idClub == null || idClub <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idClub);
         return Mapper.mapToClubDTO(clubRepository.findById(idClub).orElseThrow(() -> new ClubException("Club not found")));
     }
 
@@ -79,9 +77,13 @@ public class ClubService {
     }
 
     public void deleteClub(Long idClub){
-        if(idClub == null || idClub <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idClub);
         clubRepository.deleteById(idClub);
+    }
+
+    public void validateId(Long idClub){
+        if(idClub == null || idClub <= 0){
+            throw new ClubException("id invalid");
+        }
     }
 }

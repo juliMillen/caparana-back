@@ -70,4 +70,10 @@ public class ExecutiveService {
         }
         executiveRepository.deleteById(idExecutive);
     }
+
+    public void validateId(Long idExecutive){
+        if(idExecutive == null || idExecutive <= 0){
+            throw new ExecutiveException("id invalid");
+        }
+    }
 }

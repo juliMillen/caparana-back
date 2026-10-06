@@ -27,11 +27,9 @@ public class SponsorService {
                 .toList();
     }
 
-    public SponsorDTO findSponsorByID(Long id){
-        if(id == null || id <= 0){
-            throw new RuntimeException("Id invalid");
-        }
-        return Mapper.mapToSponsorDTO(sponsorRepository.findById(id).orElseThrow(()-> new SponsorException("Sponsor not found")));
+    public SponsorDTO findSponsorByID(Long idSponsor){
+        validateId(idSponsor);
+        return Mapper.mapToSponsorDTO(sponsorRepository.findById(idSponsor).orElseThrow(()-> new SponsorException("Sponsor not found")));
     }
 
     public SponsorDTO createSponsor(String name, MultipartFile image) throws IOException {
@@ -45,9 +43,13 @@ public class SponsorService {
     }
 
     public void deleteSponsor(Long idSponsor){
-        if(idSponsor == null || idSponsor <= 0){
-            throw new RuntimeException("Id invalid");
-        }
+        validateId(idSponsor);
         sponsorRepository.deleteById(idSponsor);
+    }
+
+    public void validateId(Long idSponsor){
+        if(idSponsor == null || idSponsor <= 0){
+            throw new SponsorException("Id invalid");
+        }
     }
 }

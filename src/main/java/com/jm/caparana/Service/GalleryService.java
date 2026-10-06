@@ -26,9 +26,7 @@ public class GalleryService {
     }
 
     public GalleryPhotoDTO getGallery(Long idGallery){
-        if(idGallery == null || idGallery <= 0){
-            throw new GalleryException("Gallery not found");
-        }
+        validateId(idGallery);
         return Mapper.mapToGalleryDTO(galleryRepository.findById(idGallery).orElseThrow(() -> new GalleryException("Gallery not found")));
     }
 
@@ -70,9 +68,13 @@ public class GalleryService {
     }
 
     public void deleteGallery(Long idGallery){
-        if(idGallery == null || idGallery <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idGallery);
         galleryRepository.deleteById(idGallery);
+    }
+
+    public void validateId(Long idGallery){
+        if(idGallery == null || idGallery <= 0){
+            throw new GalleryException("Gallery not found");
+        }
     }
 }

@@ -33,9 +33,7 @@ public class MatchService {
     }
 
     public MatchDTO findMatchById(Long idMatch){
-        if(idMatch == null || idMatch <= 0){
-            throw new MatchException("id invalid");
-        }
+        validateId(idMatch);
         return Mapper.mapToMatchDTO(matchRepository.findById(idMatch).orElseThrow(() -> new MatchException("Match not found")));
     }
 
@@ -89,10 +87,14 @@ public class MatchService {
     }
 
     public void deleteMatch(Long idMatch){
+        validateId(idMatch);
+        Match match = matchRepository.findById(idMatch).orElseThrow(()-> new MatchException("Match not found"));
+        matchRepository.delete(match);
+    }
+
+    public void validateId(Long idMatch){
         if(idMatch == null || idMatch <= 0){
             throw new MatchException("id invalid");
         }
-        Match match = matchRepository.findById(idMatch).orElseThrow(()-> new MatchException("Match not found"));
-        matchRepository.delete(match);
     }
 }

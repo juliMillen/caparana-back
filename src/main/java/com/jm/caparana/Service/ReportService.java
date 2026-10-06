@@ -28,11 +28,9 @@ public class ReportService {
                 .toList();
     }
 
-    public ReportDTO findReportById(Long id){
-        if(id == null || id == 0){
-            throw new RuntimeException("id invalid");
-        }
-        return Mapper.mapToReportDTO(reportRepository.findById(id).orElseThrow(() -> new ReportException("report not found")));
+    public ReportDTO findReportById(Long idReport){
+        validateId(idReport);
+        return Mapper.mapToReportDTO(reportRepository.findById(idReport).orElseThrow(() -> new ReportException("Report not found")));
     }
 
     public ReportDTO saveDTO(String title, String description, LocalDate publicationDate, MultipartFile image)throws IOException {
@@ -61,9 +59,13 @@ public class ReportService {
     }
 
     public void deleteReport(Long idReport){
-        if(idReport == null || idReport == 0){
-            throw  new RuntimeException("id invalid");
-        }
+        validateId(idReport);
         reportRepository.deleteById(idReport);
+    }
+
+    public void validateId(Long idReport){
+        if(idReport == null || idReport == 0){
+            throw new ReportException("id invalid");
+        }
     }
 }

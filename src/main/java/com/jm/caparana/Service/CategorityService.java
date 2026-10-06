@@ -27,9 +27,7 @@ public class CategorityService {
     }
 
     public CategorityDTO findCategorityById(Long idCategority){
-        if(idCategority == null || idCategority <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idCategority);
         return Mapper.mapToCategorityDTO(categorityRepository.findById(idCategority).orElseThrow(() -> new CategorityException("categority not found")));
     }
 
@@ -99,9 +97,13 @@ public class CategorityService {
     }
 
     public void deleteCategority(Long idCategority){
-        if(idCategority == null || idCategority <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idCategority);
         categorityRepository.deleteById(idCategority);
+    }
+
+    public void validateId(Long idCategority){
+        if(idCategority == null || idCategority <= 0){
+            throw new CategorityException("id invalid");
+        }
     }
 }
