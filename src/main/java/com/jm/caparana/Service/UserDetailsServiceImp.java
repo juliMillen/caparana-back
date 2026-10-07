@@ -47,7 +47,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
         return new User(newUser.getUsername(),
                 newUser.getPassword(),
                 newUser.isEnable(),
-                newUser.isAccountNotExpired(),
+                newUser.isAccountNonExpired(),
                 newUser.isAccountNonLocked(),
                 newUser.isCredentialsNonExpired(),
                 grantedAuthorities);

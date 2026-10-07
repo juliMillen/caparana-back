@@ -34,10 +34,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/**").authenticated()
                         .requestMatchers(HttpMethod.PATCH,"/api/**").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/api/**").authenticated())
+                        .requestMatchers(HttpMethod.DELETE,"/api/**").authenticated()
+                        .anyRequest().denyAll())
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
     }

@@ -33,7 +33,7 @@ public class UserSecService {
             toUpdate.setUsername(user.getUsername());
             toUpdate.setEnable(user.isEnable());
             toUpdate.setAccountNonLocked(user.isAccountNonLocked());
-            toUpdate.setAccountNotExpired(user.isAccountNotExpired());
+            toUpdate.setAccountNonExpired(user.isAccountNonExpired());
             toUpdate.setRolList(user.getRolList());
             userSecRepository.save(toUpdate);
         }

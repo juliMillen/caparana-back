@@ -30,8 +30,6 @@ public class GalleryService {
         return Mapper.mapToGalleryDTO(galleryRepository.findById(idGallery).orElseThrow(() -> new GalleryException("Gallery not found")));
     }
 
-
-
     public GalleryPhotoDTO create(GalleryPhotoDTO galleryDTO){
 
         List<Photo> photos = galleryDTO.getPhotosDTO().stream()

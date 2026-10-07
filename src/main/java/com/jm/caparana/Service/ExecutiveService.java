@@ -29,9 +29,7 @@ public class ExecutiveService {
     }
 
     public ExecutiveDTO findExecutiveById(Long idExecutive){
-        if(idExecutive == null || idExecutive <= 0){
-            throw new RuntimeException("id invalid");
-        }
+        validateId(idExecutive);
         return Mapper.mapToExecutiveDTO(executiveRepository.findById(idExecutive).orElseThrow(() -> new ExecutiveException("executive not found")));
     }
 
@@ -65,9 +63,7 @@ public class ExecutiveService {
     }
 
     public void deleteExecutive(Long idExecutive){
-        if(idExecutive == null || idExecutive <= 0){
-            throw new RuntimeException("id is invalid");
-        }
+        validateId(idExecutive);
         executiveRepository.deleteById(idExecutive);
     }
 

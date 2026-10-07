@@ -27,7 +27,7 @@ public class UserSec  {
 
     private boolean enable;
 
-    private boolean accountNotExpired;
+    private boolean accountNonExpired;
 
     private boolean accountNonLocked;
 
